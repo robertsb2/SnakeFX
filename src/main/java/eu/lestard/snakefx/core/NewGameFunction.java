@@ -42,7 +42,7 @@ public class NewGameFunction implements Runnable {
         gridModel.getCells().forEach(cell -> cell.changeState(State.EMPTY));
 
         snake.newGame();
-//        snake2.newGame();
+        snake2.newGame();
 
         foodGenerator.generateFood();
 

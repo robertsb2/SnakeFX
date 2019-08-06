@@ -18,6 +18,7 @@ public class Snake {
 
     private int x;
     private int y;
+    private GameLoop loop;
     private ObjectProperty<Direction> directionControlProperty;
 
     Direction currentDirection;
@@ -39,18 +40,19 @@ public class Snake {
     public Snake(final CentralViewModel viewModel, final GridModel<State> gridModel, final GameLoop gameLoop) {
         this.viewModel = viewModel;
         this.gridModel = gridModel;
-
+        this.loop = gameLoop;
 
         tail = new ArrayList<>();
-
-        gameLoop.addAction(this::move);
-
-
     }
 
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
+        registerSnake();
+    }
+
+    private void registerSnake() {
+        this.loop.addAction(this::move);
     }
 
     public void setDirectionControlProperty(ObjectProperty<Direction> property){
