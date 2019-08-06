@@ -26,7 +26,7 @@ public class TriggerablePopup {
     public TriggerablePopup(Class<? extends FxmlView<? extends ViewModel>> contentViewType){
         stage = new Stage();
 
-        final ViewTuple<FxmlView<? extends ViewModel>, ViewModel> viewTuple = FluentViewLoader.fxmlView(contentViewType).load();
+        final ViewTuple<FxmlView<? extends ViewModel>, ViewModel> viewTuple = (ViewTuple<FxmlView<? extends ViewModel>, ViewModel>) FluentViewLoader.fxmlView(contentViewType).load();
 
         final Scene scene = new Scene(viewTuple.getView());
 

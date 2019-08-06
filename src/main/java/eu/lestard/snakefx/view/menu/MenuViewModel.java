@@ -37,6 +37,7 @@ public class MenuViewModel implements ViewModel {
         sizeOptions.addAll(Arrays.asList(15,25,35,50));
         playerOptions.addAll(Arrays.asList(1,2));
         newSize.bindBidirectional(centralViewModel.gridSize);
+        newPlayers.bindBidirectional(centralViewModel.players);
     }
 
     public BooleanProperty aboutPopupVisible(){
@@ -68,4 +69,8 @@ public class MenuViewModel implements ViewModel {
     public List<Integer> playerOptions() { return playerOptions; }
 
     public IntegerProperty newPlayers() { return newPlayers; }
+
+    public CentralViewModel GetCentralViewModal(){
+        return this.centralViewModel;
+    }
 }

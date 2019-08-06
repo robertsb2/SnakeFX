@@ -23,7 +23,7 @@ public class MenuView implements FxmlView<MenuViewModel>, Initializable {
 
     @InjectViewModel
     private MenuViewModel viewModel;
-    @InjectViewModel
+
     private CentralViewModel centralViewModel;
 
     @FXML
@@ -40,6 +40,7 @@ public class MenuView implements FxmlView<MenuViewModel>, Initializable {
                 aboutPopup.trigger().bindBidirectional(viewModel.aboutPopupVisible());
             }
         });
+        centralViewModel = viewModel.GetCentralViewModal();
     }
 
     @FXML

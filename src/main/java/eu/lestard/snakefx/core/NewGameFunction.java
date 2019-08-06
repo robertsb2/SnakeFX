@@ -19,7 +19,7 @@ public class NewGameFunction implements Runnable {
     private final CentralViewModel viewModel;
     private final GridModel<State> gridModel;
     private final Snake snake;
-//    private final Snake snake2;
+    private final Snake snake2;
     private final FoodGenerator foodGenerator;
 
     public NewGameFunction(final CentralViewModel viewModel, final GridModel<State> gridModel, final Snake snake, final Snake snake2,
@@ -28,8 +28,10 @@ public class NewGameFunction implements Runnable {
         this.gridModel = gridModel;
         this.snake = snake;
         snake.setPosition(P1_START_X.get(), P1_START_Y.get());
-//        this.snake2 = snake2;
-//        snake2.setPosition(P2_START_X.get(), P2_START_Y.get());
+        snake.setDirectionControlProperty(viewModel.snakeDirection);
+        this.snake2 = snake2;
+        snake2.setPosition(P2_START_X.get(), P2_START_Y.get());
+        snake2.setDirectionControlProperty(viewModel.snake2Direction);
         this.foodGenerator = foodGenerator;
     }
 

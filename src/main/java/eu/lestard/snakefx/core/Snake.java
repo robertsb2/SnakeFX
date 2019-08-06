@@ -3,12 +3,10 @@ package eu.lestard.snakefx.core;
 import eu.lestard.grid.Cell;
 import eu.lestard.grid.GridModel;
 import eu.lestard.snakefx.viewmodel.CentralViewModel;
+import javafx.beans.property.ObjectProperty;
 
-import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
-
-import static eu.lestard.snakefx.config.Config.*;
 
 /**
  * This class represents the snake.
@@ -19,7 +17,8 @@ public class Snake {
 
 
     private int x;
-    private  int y;
+    private int y;
+    private ObjectProperty<Direction> directionControlProperty;
 
     Direction currentDirection;
 
@@ -46,13 +45,18 @@ public class Snake {
 
         gameLoop.addAction(this::move);
 
-        viewModel.snakeDirection.addListener((observable,oldDirection,newDirection) ->
-                Snake.this.changeDirection(newDirection));
+
     }
 
     public void setPosition(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public void setDirectionControlProperty(ObjectProperty<Direction> property){
+        directionControlProperty = property;
+        directionControlProperty.addListener((observable, oldDirection, newDirection) ->
+                Snake.this.changeDirection(newDirection));
     }
     /**
      * Initalizes the fields of the snake.
@@ -81,7 +85,7 @@ public class Snake {
      */
     private void changeDirection(final Direction newDirection) {
         if (newDirection.hasSameOrientation(currentDirection)) {
-            viewModel.snakeDirection.setValue(nextDirection);
+            directionControlProperty.setValue(nextDirection);
         } else {
             nextDirection = newDirection;
         }

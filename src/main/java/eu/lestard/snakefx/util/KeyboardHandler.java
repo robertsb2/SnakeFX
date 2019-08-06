@@ -40,6 +40,21 @@ public class KeyboardHandler implements EventHandler<KeyEvent> {
 		case RIGHT:
 			viewModel.snakeDirection.set(Direction.RIGHT);
 			break;
+			case W:
+				viewModel.snake2Direction.set(Direction.UP);
+				break;
+			case S:
+				viewModel.snake2Direction.set(Direction.DOWN);
+				break;
+			case A:
+				viewModel.snake2Direction.set(Direction.LEFT);
+				break;
+			case D:
+				viewModel.snake2Direction.set(Direction.RIGHT);
+				break;
+
 		}
+
+
 	}
 }
