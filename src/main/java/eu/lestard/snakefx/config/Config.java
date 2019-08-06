@@ -16,12 +16,22 @@ public enum Config {
 	/**
 	 * The x coordinate of the starting point of the snake
 	 */
-	SNAKE_START_X(10),
+	P1_START_X(4),
 
 	/**
 	 * The y coordinate of the starting point of the snake
 	 */
-	SNAKE_START_Y(10),
+	P1_START_Y(10),
+
+	/**
+	 * The x coordinate of the starting point of the snake
+	 */
+	P2_START_X(10),
+
+	/**
+	 * The y coordinate of the starting point of the snake
+	 */
+	P2_START_Y(10),
 
 	/**
 	 * The max number of HighScore entries that are saved and persisted

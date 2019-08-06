@@ -13,6 +13,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Dictionary;
 import java.util.List;
 
 @Singleton
@@ -22,8 +23,10 @@ public class MenuViewModel implements ViewModel {
     private final Runnable newGameFunction;
 
     private List<Integer> sizeOptions = new ArrayList<>();
+    private List<Integer> playerOptions = new ArrayList<>();
 
     private IntegerProperty newSize = new SimpleIntegerProperty();
+    private IntegerProperty newPlayers = new SimpleIntegerProperty();
 
     private BooleanProperty aboutPopupVisible = new SimpleBooleanProperty();
 
@@ -32,6 +35,7 @@ public class MenuViewModel implements ViewModel {
         this.newGameFunction = newGameFunction;
 
         sizeOptions.addAll(Arrays.asList(15,25,35,50));
+        playerOptions.addAll(Arrays.asList(1,2));
         newSize.bindBidirectional(centralViewModel.gridSize);
     }
 
@@ -55,11 +59,13 @@ public class MenuViewModel implements ViewModel {
         Platform.exit();
     }
 
-    public IntegerProperty newSize() {
-        return newSize;
-    }
+    public IntegerProperty newSize() { return newSize; }
 
     public List<Integer> sizeOptions() {
         return sizeOptions;
     }
+
+    public List<Integer> playerOptions() { return playerOptions; }
+
+    public IntegerProperty newPlayers() { return newPlayers; }
 }

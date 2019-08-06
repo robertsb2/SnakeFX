@@ -3,6 +3,7 @@ package eu.lestard.snakefx.core;
 import eu.lestard.grid.Cell;
 import eu.lestard.grid.GridModel;
 import eu.lestard.snakefx.viewmodel.CentralViewModel;
+import static eu.lestard.snakefx.config.Config.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.internal.util.reflection.Whitebox;

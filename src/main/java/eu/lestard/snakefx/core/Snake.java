@@ -15,12 +15,11 @@ import static eu.lestard.snakefx.config.Config.*;
  *
  * @author manuel.mauky
  */
-@Singleton
 public class Snake {
 
 
-    private final int x;
-    private final int y;
+    private int x;
+    private  int y;
 
     Direction currentDirection;
 
@@ -41,8 +40,7 @@ public class Snake {
     public Snake(final CentralViewModel viewModel, final GridModel<State> gridModel, final GameLoop gameLoop) {
         this.viewModel = viewModel;
         this.gridModel = gridModel;
-        x = SNAKE_START_X.get();
-        y = SNAKE_START_Y.get();
+
 
         tail = new ArrayList<>();
 
@@ -52,6 +50,10 @@ public class Snake {
                 Snake.this.changeDirection(newDirection));
     }
 
+    public void setPosition(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
     /**
      * Initalizes the fields of the snake.
      */

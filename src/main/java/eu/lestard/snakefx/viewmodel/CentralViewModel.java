@@ -21,6 +21,8 @@ public class CentralViewModel {
 
 	public final IntegerProperty points = new SimpleIntegerProperty(0);
 
+	public final IntegerProperty players = new SimpleIntegerProperty(1);
+
 	public final ObjectProperty<SpeedLevel> speed = new SimpleObjectProperty<>(SpeedLevel.MEDIUM);
 
 	public final BooleanProperty collision = new SimpleBooleanProperty(false);
