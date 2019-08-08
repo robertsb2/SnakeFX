@@ -74,6 +74,10 @@ public class GameLoop {
             actions.forEach(Runnable::run));
     }
 
+    public void clearActions() {
+        actions.clear();
+    }
+
 
     /**
      * This listener controls the timeline when there are external changes to the status property. This needs to be done

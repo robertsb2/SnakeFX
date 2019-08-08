@@ -6,6 +6,8 @@ import javafx.animation.Animation.Status;
 
 import javax.inject.Singleton;
 
+import java.rmi.registry.Registry;
+
 import static eu.lestard.snakefx.config.Config.*;
 
 /**
@@ -18,35 +20,48 @@ public class NewGameFunction implements Runnable {
 
     private final CentralViewModel viewModel;
     private final GridModel<State> gridModel;
-    private final Snake snake;
-    private final Snake snake2;
     private final FoodGenerator foodGenerator;
+    private GameLoop gameLoop;
 
-    public NewGameFunction(final CentralViewModel viewModel, final GridModel<State> gridModel, final Snake snake, final Snake snake2,
+    public NewGameFunction(final CentralViewModel viewModel, final GridModel<State> gridModel, GameLoop gameLoop,
         final FoodGenerator foodGenerator) {
         this.viewModel = viewModel;
         this.gridModel = gridModel;
-        this.snake = snake;
-        snake.setPosition(P1_START_X.get(), P1_START_Y.get());
-        snake.setDirectionControlProperty(viewModel.snakeDirection);
-        this.snake2 = snake2;
-        snake2.setPosition(P2_START_X.get(), P2_START_Y.get());
-        snake2.setDirectionControlProperty(viewModel.snake2Direction);
+        this.gameLoop = gameLoop;
+
+
         this.foodGenerator = foodGenerator;
     }
+
+
 
     @Override
     public void run() {
         viewModel.gameloopStatus.set(Status.STOPPED);
-
         gridModel.getCells().forEach(cell -> cell.changeState(State.EMPTY));
 
-        snake.newGame();
-        snake2.newGame();
-
+        RegisterSnakes();
         foodGenerator.generateFood();
 
         viewModel.gameloopStatus.set(Status.RUNNING);
         viewModel.gameloopStatus.set(Status.PAUSED);
+    }
+
+    private void RegisterSnakes() {
+        gameLoop.clearActions();
+        Snake snake = new Snake(viewModel, gridModel, gameLoop, P1_START_X.get(), P1_START_Y.get());
+        snake.setDirectionControlProperty(viewModel.snakeDirection);
+        snake.newGame();
+        if(viewModel.players.get() == 2){
+            RegisterSecondPlayer();
+        }
+    }
+
+
+
+    private void RegisterSecondPlayer(){
+        Snake snake2 = new Snake(viewModel, gridModel, gameLoop, P2_START_X.get(), P2_START_Y.get());
+        snake2.setDirectionControlProperty(viewModel.snake2Direction);
+        snake2.newGame();
     }
 }

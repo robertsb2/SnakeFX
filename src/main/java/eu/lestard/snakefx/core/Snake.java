@@ -4,6 +4,7 @@ import eu.lestard.grid.Cell;
 import eu.lestard.grid.GridModel;
 import eu.lestard.snakefx.viewmodel.CentralViewModel;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,6 @@ public class Snake {
 
     private int x;
     private int y;
-    private GameLoop loop;
     private ObjectProperty<Direction> directionControlProperty;
 
     Direction currentDirection;
@@ -37,28 +37,21 @@ public class Snake {
      * @param gridModel      the grid on which the snake is created
      * @param gameLoop  the gameloop that is used for the movement of the snake
      */
-    public Snake(final CentralViewModel viewModel, final GridModel<State> gridModel, final GameLoop gameLoop) {
+    public Snake(final CentralViewModel viewModel, final GridModel<State> gridModel, final GameLoop gameLoop, int x, int y) {
         this.viewModel = viewModel;
         this.gridModel = gridModel;
-        this.loop = gameLoop;
+        gameLoop.addAction(this::move);
+        this.x = x;
+        this.y = y;
 
         tail = new ArrayList<>();
     }
 
-    public void setPosition(int x, int y) {
-        this.x = x;
-        this.y = y;
-        registerSnake();
-    }
-
-    private void registerSnake() {
-        this.loop.addAction(this::move);
-    }
 
     public void setDirectionControlProperty(ObjectProperty<Direction> property){
         directionControlProperty = property;
         directionControlProperty.addListener((observable, oldDirection, newDirection) ->
-                Snake.this.changeDirection(newDirection));
+                this.changeDirection(newDirection));
     }
     /**
      * Initalizes the fields of the snake.
@@ -101,7 +94,7 @@ public class Snake {
 
         final Cell<State> newHead = getFromDirection(head, currentDirection);
 
-        if (newHead.getState().equals(State.TAIL)) {
+        if (newHead.getState().equals(State.TAIL) || newHead.getState().equals(State.HEAD)) {
             viewModel.collision.set(true);
             return;
         }

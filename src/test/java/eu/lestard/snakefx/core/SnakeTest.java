@@ -36,7 +36,8 @@ public class SnakeTest {
 
         viewModel = new CentralViewModel();
 
-        snake = new Snake(viewModel, gridModel, gameLoopMock);
+        snake = new Snake(viewModel, gridModel, gameLoopMock, X, Y);
+        snake.setDirectionControlProperty(viewModel.snakeDirection);
         Whitebox.setInternalState(snake, "x", X);
         Whitebox.setInternalState(snake, "y", Y);
 

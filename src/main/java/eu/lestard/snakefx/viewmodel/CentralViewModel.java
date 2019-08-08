@@ -23,7 +23,7 @@ public class CentralViewModel {
 
 	public final IntegerProperty players = new SimpleIntegerProperty(1);
 
-	public final ObjectProperty<SpeedLevel> speed = new SimpleObjectProperty<>(SpeedLevel.MEDIUM);
+	public final ObjectProperty<SpeedLevel> speed = new SimpleObjectProperty<>(SpeedLevel.FAST);
 
 	public final BooleanProperty collision = new SimpleBooleanProperty(false);
 

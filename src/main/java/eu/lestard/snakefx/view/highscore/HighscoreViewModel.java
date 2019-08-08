@@ -36,6 +36,9 @@ public class HighscoreViewModel implements ViewModel {
     }
 
     void gameFinished(){
+        if(centralViewModel.players.get() > 1){
+            return;
+        }
         final int points = centralViewModel.points.get();
 
         final int size = highScoreEntries.size();
