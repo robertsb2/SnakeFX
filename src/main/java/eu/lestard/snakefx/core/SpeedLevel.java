@@ -8,9 +8,9 @@ package eu.lestard.snakefx.core;
 *
 */
 public enum SpeedLevel {
-	SLOW(2),
+	SLOW(5),
 
-	MEDIUM(5),
+	MEDIUM(10),
 
 	FAST(15),
 

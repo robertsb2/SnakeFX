@@ -4,6 +4,7 @@ import eu.lestard.grid.Cell;
 import eu.lestard.grid.GridModel;
 import eu.lestard.snakefx.viewmodel.CentralViewModel;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 
 import java.util.ArrayList;
@@ -31,18 +32,20 @@ public class Snake {
 
     private final CentralViewModel viewModel;
     private final GridModel<State> gridModel;
+    private final String opponent;
 
     /**
      * @param viewModel the viewModel
      * @param gridModel      the grid on which the snake is created
      * @param gameLoop  the gameloop that is used for the movement of the snake
      */
-    public Snake(final CentralViewModel viewModel, final GridModel<State> gridModel, final GameLoop gameLoop, int x, int y) {
+    public Snake(final CentralViewModel viewModel, final GridModel<State> gridModel, final GameLoop gameLoop, int x, int y, String opponent) {
         this.viewModel = viewModel;
         this.gridModel = gridModel;
         gameLoop.addAction(this::move);
         this.x = x;
         this.y = y;
+        this.opponent = opponent;
 
         tail = new ArrayList<>();
     }
@@ -80,7 +83,7 @@ public class Snake {
      */
     private void changeDirection(final Direction newDirection) {
         if (newDirection.hasSameOrientation(currentDirection)) {
-            directionControlProperty.setValue(nextDirection);
+//            directionControlProperty.setValue(nextDirection);
         } else {
             nextDirection = newDirection;
         }
@@ -95,6 +98,7 @@ public class Snake {
         final Cell<State> newHead = getFromDirection(head, currentDirection);
 
         if (newHead.getState().equals(State.TAIL) || newHead.getState().equals(State.HEAD)) {
+            viewModel.winner.setValue(opponent);
             viewModel.collision.set(true);
             return;
         }

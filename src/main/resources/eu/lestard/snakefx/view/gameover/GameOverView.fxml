@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="eu.lestard.snakefx.view.gameover.GameOverView">
+
+    <stylesheets>
+        <URL value="@gameover.css" />
+    </stylesheets>
+
+    <children>
+        <VBox alignment="CENTER" fillWidth="true" prefHeight="400.0" prefWidth="600.0" spacing="14.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label text="Game Over" />
+                <Label fx:id="playerId" textFill="BLACK" />
+                <Button fx:id="closeButton" onAction="#close">Ok</Button>
+            </children>
+            <padding>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>

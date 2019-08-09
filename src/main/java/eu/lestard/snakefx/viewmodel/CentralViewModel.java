@@ -23,9 +23,13 @@ public class CentralViewModel {
 
 	public final IntegerProperty players = new SimpleIntegerProperty(1);
 
+	public final StringProperty winner = new SimpleStringProperty();
+
 	public final ObjectProperty<SpeedLevel> speed = new SimpleObjectProperty<>(SpeedLevel.FAST);
 
 	public final BooleanProperty collision = new SimpleBooleanProperty(false);
+
+	public final BooleanProperty gameOver = new SimpleBooleanProperty(false);
 
 	public final ObjectProperty<Status> gameloopStatus = new SimpleObjectProperty<>(Status.STOPPED);
 
@@ -35,7 +39,7 @@ public class CentralViewModel {
 
 	public final BooleanProperty newHighscoreWindowOpen = new SimpleBooleanProperty(false);
 
-	public final ObjectProperty<Direction> snakeDirection = new SimpleObjectProperty<>(Direction.UP);
+	public ObjectProperty<Direction> snakeDirection = new SimpleObjectProperty<>(Direction.UP);
 
-	public final ObjectProperty<Direction> snake2Direction = new SimpleObjectProperty<>(Direction.UP);
+	public ObjectProperty<Direction> snake2Direction = new SimpleObjectProperty<>(Direction.UP);
 }

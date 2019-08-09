@@ -10,6 +10,7 @@ import eu.lestard.snakefx.highscore.HighscoreDao;
 import eu.lestard.snakefx.highscore.HighscoreJsonDao;
 import eu.lestard.snakefx.util.KeyboardHandler;
 import eu.lestard.snakefx.util.TriggerablePopup;
+import eu.lestard.snakefx.view.gameover.GameOverView;
 import eu.lestard.snakefx.view.highscore.HighscoreView;
 import eu.lestard.snakefx.view.highscore.NewHighscoreView;
 import eu.lestard.snakefx.view.main.MainView;
@@ -29,6 +30,7 @@ public class Launcher extends Application {
 
     private TriggerablePopup newHighscorePopup;
     private TriggerablePopup highscorePopup;
+    private TriggerablePopup gameOverPopup;
 
     @Override
     public void start(final Stage primaryStage) {
@@ -58,6 +60,9 @@ public class Launcher extends Application {
 
 
         CentralViewModel viewModel = easyDI.getInstance(CentralViewModel.class);
+
+        gameOverPopup = new TriggerablePopup(GameOverView.class, primaryStage);
+        gameOverPopup.trigger().bindBidirectional(viewModel.gameOver);
 
         highscorePopup = new TriggerablePopup(HighscoreView.class, primaryStage);
         highscorePopup.trigger().bindBidirectional(viewModel.highscoreWindowOpen);

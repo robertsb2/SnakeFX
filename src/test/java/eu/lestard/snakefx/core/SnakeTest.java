@@ -15,6 +15,7 @@ import static org.mockito.Mockito.*;
 @SuppressWarnings("unchecked")
 public class SnakeTest {
     private Snake snake;
+    private Snake snake2;
 
     private GridModel<State> gridModel;
 
@@ -22,6 +23,9 @@ public class SnakeTest {
 
     private static final int X = 4;
     private static final int Y = 2;
+    private static final int X2 = 8;
+    private static final int Y2 = 2;
+
 
     private CentralViewModel viewModel;
 
@@ -36,8 +40,10 @@ public class SnakeTest {
 
         viewModel = new CentralViewModel();
 
-        snake = new Snake(viewModel, gridModel, gameLoopMock, X, Y);
+        snake = new Snake(viewModel, gridModel, gameLoopMock, X, Y, "Null");
+        snake2 = new Snake(viewModel, gridModel, gameLoopMock, X2, Y2, "Null");
         snake.setDirectionControlProperty(viewModel.snakeDirection);
+        snake2.setDirectionControlProperty(viewModel.snake2Direction);
         Whitebox.setInternalState(snake, "x", X);
         Whitebox.setInternalState(snake, "y", Y);
 
@@ -298,5 +304,17 @@ public class SnakeTest {
         x2y0 = snake.getFromDirection(x2y3, Direction.DOWN);
         assertThat(x2y0.getColumn()).isEqualTo(2);
         assertThat(x2y0.getRow()).isEqualTo(0);
+    }
+
+
+    @Test
+    public void TestMultiPlayerIndependentMovement(){
+        snake.init();
+        snake2.init();
+
+        viewModel.snakeDirection.set(Direction.LEFT);
+        assertThat(snake.nextDirection).isEqualTo(Direction.LEFT);
+        assertThat(snake2.nextDirection).isNotEqualTo(Direction.LEFT);
+
     }
 }
