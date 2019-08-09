@@ -23,7 +23,7 @@ public class SnakeTest {
 
     private static final int X = 4;
     private static final int Y = 2;
-    private static final int X2 = 8;
+    private static final int X2 = 5;
     private static final int Y2 = 2;
 
 
@@ -40,8 +40,8 @@ public class SnakeTest {
 
         viewModel = new CentralViewModel();
 
-        snake = new Snake(viewModel, gridModel, gameLoopMock, X, Y, "Null");
-        snake2 = new Snake(viewModel, gridModel, gameLoopMock, X2, Y2, "Null");
+        snake = new Snake(viewModel, gridModel, gameLoopMock, X, Y, "Player 2");
+        snake2 = new Snake(viewModel, gridModel, gameLoopMock, X2, Y2, "Player 1");
         snake.setDirectionControlProperty(viewModel.snakeDirection);
         snake2.setDirectionControlProperty(viewModel.snake2Direction);
         Whitebox.setInternalState(snake, "x", X);
@@ -307,8 +307,18 @@ public class SnakeTest {
     }
 
 
+
+
+
+
+
+
+
+
+    //My Tests
+
     @Test
-    public void TestMultiPlayerIndependentMovement(){
+    public void testMultiPlayerIndependentMovement(){
         snake.init();
         snake2.init();
 
@@ -316,5 +326,92 @@ public class SnakeTest {
         assertThat(snake.nextDirection).isEqualTo(Direction.LEFT);
         assertThat(snake2.nextDirection).isNotEqualTo(Direction.LEFT);
 
+    }
+
+
+    @Test
+    public void testMultiPlayerCollision(){
+        snake.init();
+        snake2.init();
+        viewModel.snake2Direction.setValue(Direction.LEFT);
+        snake2.move();
+        assertThat(viewModel.collision.get());
+        assertThat(viewModel.winner.get().equals("player 1"));
+    }
+
+    @Test
+    public void testMultiPlayerSnakeGrowth(){
+        final Cell<State> field1 = gridModel.getCell(X, Y);
+        final Cell<State> field2 = gridModel.getCell(X, Y - 1);
+        field2.changeState(State.FOOD);
+        final Cell<State> field3 = gridModel.getCell(X, Y - 2);
+        assertThat(field3.getState()).isEqualTo(State.EMPTY);
+        final Cell<State> field4 = gridModel.getCell(X-1, Y-2);
+        assertThat(field4.getState()).isEqualTo(State.EMPTY);
+
+        final Cell<State> field5 = gridModel.getCell(X2, Y2);
+        final Cell<State> field6 = gridModel.getCell(X2, Y2 - 1);
+        field6.changeState(State.FOOD);
+        final Cell<State> field7 = gridModel.getCell(X2, Y2 - 2);
+        assertThat(field7.getState()).isEqualTo(State.EMPTY);
+        final Cell<State> field8 = gridModel.getCell(X2+1, Y2 -2);
+        assertThat(field8.getState()).isEqualTo(State.EMPTY);
+
+        snake.init();
+        snake2.init();
+
+        snake.move();
+        snake2.move();
+
+        assertThat(snake.head).isEqualTo(field2);
+        assertThat(snake2.head).isEqualTo(field6);
+        assertThat(field1.getState()).isEqualTo(State.TAIL);
+        assertThat(field5.getState()).isEqualTo(State.TAIL);
+        assertThat(snake.tail).containsOnly(field1);
+        assertThat(snake2.tail).containsOnly(field5);
+
+
+        field4.changeState(State.FOOD);
+
+        snake.move();
+        snake2.move();
+
+
+        assertThat(snake.head).isEqualTo(field3);
+        assertThat(snake2.head).isEqualTo(field7);
+
+
+        assertThat(field2.getState()).isEqualTo(State.TAIL);
+        assertThat(field6.getState()).isEqualTo(State.TAIL);
+        assertThat(snake.tail).containsOnly(field2);
+        assertThat(snake2.tail).containsOnly(field6);
+
+
+        // field1 is now empty
+        assertThat(field1.getState()).isEqualTo(State.EMPTY);
+        assertThat(field5.getState()).isEqualTo(State.EMPTY);
+
+        // change the direction to right so that we land on field4
+        viewModel.snakeDirection.set(Direction.LEFT);
+        viewModel.snake2Direction.set(Direction.RIGHT);
+
+        snake.move();
+        snake2.move();
+
+        assertThat(snake.head).isEqualTo(field4);
+        assertThat(snake2.head).isEqualTo(field8);
+
+        assertThat(field4.getState()).isEqualTo(State.HEAD);
+        assertThat(field3.getState()).isEqualTo(State.TAIL);
+        assertThat(field2.getState()).isEqualTo(State.TAIL);
+        assertThat(field1.getState()).isEqualTo(State.EMPTY);
+
+        assertThat(field8.getState()).isEqualTo(State.HEAD);
+        assertThat(field7.getState()).isEqualTo(State.TAIL);
+        assertThat(field6.getState()).isEqualTo(State.EMPTY);
+        assertThat(field5.getState()).isEqualTo(State.EMPTY);
+
+        assertThat(snake.tail).containsOnly(field3, field2);
+        assertThat(snake2.tail).containsOnly(field7);
     }
 }

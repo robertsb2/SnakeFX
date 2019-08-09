@@ -83,7 +83,7 @@ public class Snake {
      */
     private void changeDirection(final Direction newDirection) {
         if (newDirection.hasSameOrientation(currentDirection)) {
-//            directionControlProperty.setValue(nextDirection);
+            directionControlProperty.setValue(nextDirection);
         } else {
             nextDirection = newDirection;
         }
